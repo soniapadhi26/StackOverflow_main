@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import RightSidebar from "./RightSidebar";
 import "./HomePage.css";
-import { FaRegCommentDots, FaRegEye, FaThumbsUp } from "react-icons/fa";
+import { FaRegCommentDots } from "react-icons/fa";
+import { FaRegEye, FaThumbsUp } from "react-icons/fa";
 
 function HomePage() {
-  // State declarations
   const [questions, setQuestions] = useState([]);
   const [filter, setFilter] = useState("interesting");
-  const filters = ["interesting", "bountied", "hot", "week", "month"];
+  const filters = useMemo(
+    () => ["interesting", "bountied", "hot", "week", "month"],
+    []
+  );
   const [fetchedQuestions, setFetchedQuestions] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // Fetch questions from the API
   useEffect(() => {
     const fetchQuestions = async () => {
-      setLoading(true); // Set loading state
+      setLoading(true);
       const fetchedData = {};
-
       try {
-        // Fetch questions for each filter type
         await Promise.all(
           filters.map(async (item) => {
-            let response;
+            let response = null;
             if (item === "interesting") {
               response = await axios.get(
                 `https://api.stackexchange.com/2.3/questions?order=desc&sort=activity&site=stackoverflow`
@@ -41,18 +41,17 @@ function HomePage() {
             fetchedData[item] = response.data.items;
           })
         );
-        setFetchedQuestions(fetchedData); // Update state with fetched data
+        setFetchedQuestions(fetchedData);
       } catch (error) {
         console.error("Error fetching questions:", error);
       } finally {
-        setLoading(false); // Reset loading state
+        setLoading(false);
       }
     };
 
     fetchQuestions();
-  }, [filters]); // Include filters as a dependency to avoid stale closures
+  }, [filters]);
 
-  // Update questions when the filter changes
   useEffect(() => {
     if (fetchedQuestions[filter]) {
       setQuestions(fetchedQuestions[filter]);
@@ -65,12 +64,10 @@ function HomePage() {
       <Sidebar />
 
       <main className="main-content">
-        {/* Top Section */}
         <div className="top-section">
           <h2>Top Questions</h2>
         </div>
 
-        {/* Filters */}
         <div className="filters">
           {filters.map((item) => (
             <button
@@ -84,7 +81,6 @@ function HomePage() {
           <button className="ask-btn1">Ask Question</button>
         </div>
 
-        {/* Questions */}
         <div className="questions">
           {loading ? (
             <p>Loading questions...</p>
