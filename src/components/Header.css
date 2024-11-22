@@ -1,0 +1,123 @@
+.header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background-color: white;
+  }
+  
+  .header-left .logo {
+    height: 40px;
+  }
+  
+  .header-center {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 15px;
+    color: #f48024;
+    font-size: 16px;
+  }
+  
+  .search-bar {
+    width: 400px;
+    padding: 10px 35px 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    outline: none;
+    transition: box-shadow 0.2s;
+  }
+  
+  .search-bar:focus {
+    box-shadow: 0 0 5px #f48024;
+  }
+  
+  .products {
+    font-weight: bold;
+    cursor: pointer;
+    color: #656262;
+    margin-left: 20px;
+  }
+  
+  .header-right .icon {
+    margin-left: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #656262;
+  }
+  
+  .header-right .icon.profile {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1024px) {
+    .homepage {
+      grid-template-columns: 200px 1fr;
+      grid-template-areas:
+        "header header"
+        "sidebar main";
+      grid-template-rows: 80px 1fr;
+    }
+  
+    .right-sidebar {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .homepage {
+      grid-template-areas:
+        "header"
+        "main"
+        "sidebar";
+      grid-template-columns: 1fr;
+      grid-template-rows: 80px auto auto;
+    }
+  
+    .sidebar {
+      order: 2;
+    }
+  
+    .filters {
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .header {
+      flex-wrap: wrap;
+      padding: 10px;
+    }
+  
+    .search-bar {
+      width: 100%;
+    }
+  
+    .filters button {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+  
+    .questions {
+      gap: 10px;
+    }
+  
+    .question-card h3 {
+      font-size: 16px;
+    }
+  }
+  
